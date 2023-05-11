@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <a href="../index.html">
+        <h3>Home page</h3>
+    </a>
+    <a href="register.html">
+        <h3>Register page</h3>
+    </a>
+    <a href="login.html">
+        <h3>login page</h3>
+    </a>
+    <a href="get_post.html">
+        <h3>Get Posts page</h3>
+    </a>
+    <a href="create_post.html">
+        <h3>Create Post page</h3>
+    </a>
+    <a href="edit_post.html">
+        <h3> Edit post page</h3>
+    </a>
+
+    <form id="form">
+        <input type="text" id="title">
+        <input type="text" id="body">
+        <input type="number" id="no_of_comments">
+        <input type="text" id="device">
+        <button></button>
+    </form>
+</body>
+<script>
+    let form = document.getElementById("form")
+    let title = document.getElementById("title")
+    let body = document.getElementById("body")
+    let device = document.getElementById("device")
+    let no_of_comments = document.getElementById("no_of_comments")
+
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault()
+
+        register()
+    })
+
+    async function register() {
+
+        let data = {
+            title: title.value,
+            body: body.value,
+            device: device.value,
+            no_of_comments: no_of_comments.value
+
+
+        }
+        console.log(data)
+        await fetch("https://calm-rose-duckling-tutu.cyclic.app/posts/update", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+            body: JSON.stringify(data)
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                alert(JSON.stringify(res.msg))
+            })
+    }
+</script>
+
+</html>

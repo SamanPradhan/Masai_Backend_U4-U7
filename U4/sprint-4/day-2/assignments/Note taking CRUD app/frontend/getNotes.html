@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register
+    </title>
+</head>
+
+<body>
+    <a href="./register.html">register page</a>
+    <a href="./createNotes.html">create note page</a>
+    <a href="./updateNotes.html">edit note page</a>
+    <a href="./getNotes.html">see notes page</a>
+    <a href="./deleteNotes.html">delete page</a>
+    <h2>All your notes are here</h2>
+    <div id="body">
+
+    </div>
+</body>
+<script>
+
+
+
+    let body = document.getElementById("body")
+    showNotes();
+    function showNotes() {
+
+
+        fetch("https://red-tired-indri.cyclic.app/note/", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `${localStorage.getItem("token")}`
+            }
+        })
+            .then((res) => res.json())
+            .then((res) => {
+
+                console.log(res)
+                display(res)
+            })
+            .catch((err) => console.log(err));
+    }
+
+    function display(data) {
+        body.innerHTML = ""
+
+        data.forEach(element => {
+            let div = document.createElement("div");
+            let title = document.createElement("h2");
+            let subject = document.createElement("h3");
+            let notebody = document.createElement("p");
+            let noteId = document.createElement("p");
+
+
+            title.innerText = "Note title:   " + element.title;
+            subject.innerText = "Note subject :  " + element.subject;
+            notebody.innerText = "Note body:   " + element.body;
+            noteId.innerText = "Note id:   " + element._id
+            div.append(title, subject, notebody, noteId)
+            body.append(div)
+
+
+        })
+
+    }
+</script>
+
+</html>

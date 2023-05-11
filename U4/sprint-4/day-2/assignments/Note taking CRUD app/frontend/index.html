@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register
+    </title>
+</head>
+
+<body>
+    <a href="./login.html">login page</a>
+    <form id="form">
+        <h2>enter email</h2><input type="email" id="email">
+        <h2>enter password</h2><input type="password" id="password">
+        <h2>enter city</cite></h2><input type="text" id="city">
+        <h2>enter age</h2><input type="number" id="age">
+        <button>submit</button>
+    </form>
+</body>
+<script>
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
+    let city = document.getElementById("city");
+    let age = document.getElementById("age");
+    let form = document.getElementById("form");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        registerUser();
+    });
+
+    async function registerUser() {
+        let data = {
+            email: email.value,
+            password: password.value,
+            age: age.value,
+            city: city.value,
+        };
+        console.log(data);
+
+        await fetch("https://red-tired-indri.cyclic.app/user/register", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                alert("registration is successfull")
+            })
+            .catch((err) => console.log(err));
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <a href="../index.html">
+        <h3>Home page</h3>
+    </a>
+    <a href="register.html">
+        <h3>Register page</h3>
+    </a>
+    <a href="login.html">
+        <h3>login page</h3>
+    </a>
+    <a href="get_post.html">
+        <h3>Get Posts page</h3>
+    </a>
+    <a href="create_post.html">
+        <h3>Create Post page</h3>
+    </a>
+    <a href="edit_post.html">
+        <h3> Edit post page</h3>
+    </a>
+    <div id="div"></div>
+</body>
+<script>
+    let div1 = document.getElementById("div")
+    get_post()
+
+    async function get_post() {
+        await fetch("https://calm-rose-duckling-tutu.cyclic.app/get", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                display(res)
+            })
+    }
+
+
+    function display(data) {
+        div1.innerHTML = ""
+        data.forEach(element => {
+            let div = document.createElement("div")
+            let title = document.createElement("h2")
+            let body = document.createElement("h3")
+            let device = document.createElement("h3")
+            let no_of_comments = document.createElement("h3")
+
+            title.innerText = "title: " + element.title
+            body.innerText = "title: " + element.body
+            device.innerText = "title: " + element.device
+            no_of_comments.innerText = "title: " + element.no_of_comments
+
+            div.append(title, body, device, no_of_comments)
+            div1.append(div)
+
+        });
+    }
+</script>
+
+</html>

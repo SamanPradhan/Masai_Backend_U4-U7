@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register
+    </title>
+</head>
+
+<body>
+    <a href="./register.html">register page</a>
+    <a href="./createNotes.html">create note page</a>
+    <a href="./updateNotes.html">edit note page</a>
+    <a href="./getNotes.html">see notes page</a>
+    <a href="./deleteNotes.html">delete page</a>
+    <form id="form">
+        <h2>enter note title</h2><input type="text" id="title">
+        <h2>enter note subject</h2> <input type="text" id="subject">
+        <h2>enter note body</h2><input type="text" id="body">
+        <h2>enter note id</h2><input type="text" id="noteid">
+        <button>submit</button>
+    </form>
+</body>
+<script>
+    let title = document.getElementById("title");
+    let subject = document.getElementById("subject");
+    let body = document.getElementById("body");
+    let noteid = document.getElementById("noteid");
+    let form = document.getElementById("form");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        editNotes();
+    });
+
+    function editNotes() {
+        let data = {
+            title: title.value,
+            subject: subject.value,
+            body: body.value
+        };
+        console.log(data);
+        console.log(noteid.value);
+        fetch(`https://red-tired-indri.cyclic.app/note/update/${noteid.value}`, {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                alert(JSON.stringify(res.msg))
+            })
+            .catch((err) => console.log(err));
+    }
+
+</script>
+
+</html>

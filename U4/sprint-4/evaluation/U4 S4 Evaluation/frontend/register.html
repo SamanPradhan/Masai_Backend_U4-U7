@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <a href="../index.html">
+        <h3>Home page</h3>
+    </a>
+    <a href="register.html">
+        <h3>Register page</h3>
+    </a>
+    <a href="login.html">
+        <h3>login page</h3>
+    </a>
+    <a href="get_post.html">
+        <h3>Get Posts page</h3>
+    </a>
+    <a href="create_post.html">
+        <h3>Create Post page</h3>
+    </a>
+    <a href="edit_post.html">
+        <h3> Edit post page</h3>
+    </a>
+
+    <form id="form">
+        <input type="text" id="name">
+        <input type="email" id="email">
+        <input type="text" id="gender">
+        <input type="password" id="password">
+        <input type="number" id="age">
+        <input type="text" id="city">
+        <input type="boolean" id="is_married">
+        <button></button>
+    </form>
+</body>
+<script>
+    let form = document.getElementById("form")
+    let name = document.getElementById("name")
+    let email = document.getElementById("email")
+    let password = document.getElementById("password")
+    let gender = document.getElementById("gender")
+    let age = document.getElementById("age")
+    let city = document.getElementById("city")
+    let is_married = document.getElementById("is_married")
+
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault()
+
+        register()
+    })
+
+    async function register() {
+
+        let data = {
+            name: name.value,
+            email: email.value,
+            gender: gender.value,
+            password: password.value,
+            age: age.value,
+            city: city.value,
+            is_married: is_married.value
+        }
+        console.log(data)
+        await fetch("https://calm-rose-duckling-tutu.cyclic.app/users/register", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                alert(JSON.stringify(res.msg))
+            })
+    }
+</script>
+
+</html>
