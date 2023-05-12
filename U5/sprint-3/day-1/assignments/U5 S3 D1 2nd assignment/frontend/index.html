@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="name" type="text">
+    <button>send the msg</button>
+    <div id="container"></div>
+</body>
+<script>
+    const server = new WebSocket("ws://localhost:8080")
+
+    //when to call the display data
+    server.onmessage = ({ data }) => {
+        data = JSON.parse(data)
+        console.log(data)
+        displayCandidates(data)
+    }
+    let container = document.getElementById("container")
+
+    function displayCandidates(candidates) {
+        //display on UI
+        container.innerHTML = ""
+        candidates?.forEach(element => {
+            container.innerHTML += `
+            <div>
+                <p>${element.name}</p>
+                <p>${element.votes}</p>
+                <button onClick ="vote(${element.id})">Vote👍</button>
+            </div>`
+        });
+    }
+    let name = document.getElementById("name")
+    function vote(id) {
+        server.send(JSON.stringify({ id: id, name: name.value }))
+    }
+</script>
+
+</html>

@@ -1,0 +1,9 @@
+Authorization
+
+
+
+1. Define the roles of the users
+
+2. customer/posts/
+
+/posts/
